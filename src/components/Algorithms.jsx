@@ -115,9 +115,7 @@ export default function Algorithms({ isDarkMode }) {
         <h1 className="hero-title">
           Algorithms <span className="highlight-text">Directory</span>
         </h1>
-        <p className="hero-description" style={{ color: 'var(--color-text-gray)' }}>
-          Explore key deep learning architectures, their primary uses, and evaluate the optimal algorithm for your project parameters.
-        </p>
+
       </div>
 
       <div className="solver-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 2fr', gap: '30px', marginBottom: '50px' }}>
