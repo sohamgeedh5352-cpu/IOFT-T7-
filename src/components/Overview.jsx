@@ -243,6 +243,18 @@ export default function Overview({ isDarkMode, setActiveTab }) {
           </div>
         </div>
 
+        <div style={{ 
+          marginTop: '40px', 
+          textAlign: 'center', 
+          fontSize: '13px', 
+          color: 'var(--color-text-gray)', 
+          opacity: '0.8',
+          borderTop: '1px solid var(--border-color)',
+          paddingTop: '20px'
+        }}>
+          From Soham Geedh (TYCO 2026-27 Kala Vidya Mandir Institute of Technology)
+        </div>
+
       </div>
     </div>
   );
