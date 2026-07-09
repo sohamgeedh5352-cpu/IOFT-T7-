@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Overview({ isDarkMode, setActiveTab }) {
   const inputNodes = [75, 150, 225];
   const hiddenNodes = [50, 116.7, 183.3, 250];
   const outputNodes = [100, 200];
+
+  const [checklist, setChecklist] = useState([
+    { id: 0, text: "Normalize Inputs: Scale data values (like image pixels) to a 0-to-1 range so the network learns faster.", checked: false },
+    { id: 1, text: "Split Datasets: Divide your data into Train (80%) and Test (20%) sets to ensure you test on unseen records.", checked: false },
+    { id: 2, text: "Tune Learning Steps: Choose a step size that is not too big (which causes unstable bounces) and not too small.", checked: false },
+    { id: 3, text: "Prevent Memorization: Stop training early or drop random connections to prevent the model from memorizing answers.", checked: false },
+    { id: 4, text: "Monitor Error Rate: Watch the error score decrease over epochs to verify the network is actually learning.", checked: false }
+  ]);
+
+  const toggleCheck = (id) => {
+    setChecklist(checklist.map(item => 
+      item.id === id ? { ...item, checked: !item.checked } : item
+    ));
+  };
 
   return (
     <div className="overview-panel" style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -154,92 +168,127 @@ export default function Overview({ isDarkMode, setActiveTab }) {
 
       <div className="overview-content-sections" style={{ display: 'flex', flexDirection: 'column', gap: '45px', marginBottom: '80px' }}>
         <section className="info-section">
-          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '8px' }}>What is Deep Learning?</h2>
+          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '15px' }}>What is Deep Learning?</h2>
           <div className="section-text" style={{ fontSize: '15px', color: 'var(--color-text-gray)', lineHeight: '1.7', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <p>
-              Deep Learning is a specialized paradigm of Machine Learning that models high-level abstractions in data by 
-              stacking multiple computational layers. Instead of relying on hand-designed features (such as manual edge 
-              filters or custom audio frequency bins), deep neural networks learn these optimal representation layers 
-              automatically from raw inputs during optimization.
+              Deep Learning is a branch of Artificial Intelligence inspired by how the human brain processes information. 
+              Instead of writing strict programming rules by hand, we feed raw data into the system, and it learns the rules 
+              and patterns automatically.
             </p>
             <p>
-              The basic cell is the artificial neuron. A single neuron multiplies its inputs by weights, adds a bias, and 
-              passes the sum through a non-linear activation function. Multiple layers of these neurons allow the network 
-              to map complex, non-linear decision boundaries.
-            </p>
-            <p>
-              During backpropagation, error gradients are computed using the calculus chain rule, propagating backwards 
-              from the output layers to adjust weights. Optimizers then step the parameter weights in the opposite direction 
-              of the computed gradients to minimize total loss.
+              The system is built out of small processing blocks called <strong>neurons</strong>. Multiple layers of these 
+              neurons are stacked together to form a network, allowing the model to recognize complex concepts like human speech, 
+              images, and translated languages.
             </p>
           </div>
         </section>
 
         <section className="info-section">
-          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '8px' }}>Hierarchical Feature Learning</h2>
+          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '15px' }}>How Networks Extract Patterns</h2>
           <div className="section-text" style={{ fontSize: '15px', color: 'var(--color-text-gray)', lineHeight: '1.7', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <p>
-              In traditional machine learning workflows, feature engineering is a manual process requiring significant domain 
-              expertise to extract relevant attributes. In contrast, deep learning networks extract features hierarchically. 
-              Earlier layers in a deep neural network act as simple edge and gradient detectors. As representations flow 
-              deeper, subsequent layers combine these simple patterns to detect compound features such as textures, corners, 
-              and shape boundaries.
+              Deep learning networks solve problems by breaking them down into simpler steps. When processing data, 
+              different layers in the network focus on different levels of detail:
             </p>
-            <p>
-              Finally, the output layers combine these intermediate representations to identify highly complex, semantic objects 
-              such as faces, vehicular forms, or textual syntax structures. This process is grounded in the concept of compositionality, 
-              which states that complex patterns can be efficiently represented as compositions of simpler, localized features.
-            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '15px', marginTop: '10px' }}>
+              <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '15px' }}>
+                <h4 style={{ color: 'var(--color-text-white)', marginBottom: '6px', fontSize: '14px' }}>1. Early Layers</h4>
+                <p style={{ fontSize: '12.5px', color: 'var(--color-text-gray)', lineHeight: '1.5' }}>Detect basic shapes, lines, and borders.</p>
+              </div>
+              <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '15px' }}>
+                <h4 style={{ color: 'var(--color-text-white)', marginBottom: '6px', fontSize: '14px' }}>2. Middle Layers</h4>
+                <p style={{ fontSize: '12.5px', color: 'var(--color-text-gray)', lineHeight: '1.5' }}>Combine lines to recognize textures and corners.</p>
+              </div>
+              <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '15px' }}>
+                <h4 style={{ color: 'var(--color-text-white)', marginBottom: '6px', fontSize: '14px' }}>3. Deep Layers</h4>
+                <p style={{ fontSize: '12.5px', color: 'var(--color-text-gray)', lineHeight: '1.5' }}>Assemble everything to identify full objects like a face.</p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="info-section">
-          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '8px' }}>The Feedforward Process</h2>
+          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '15px' }}>How Predictions Flow (Feedforward)</h2>
           <div className="section-text" style={{ fontSize: '15px', color: 'var(--color-text-gray)', lineHeight: '1.7', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <p>
-              During a feedforward pass, input features pass sequentially through the network. For a given hidden layer l, the 
-              pre-activation vector is calculated as z[l] = W[l] · a[l-1] + b[l], where W[l] is the matrix of weight 
-              parameters, b[l] is the bias offset vector, and a[l-1] is the activation output of the previous layer.
+              Making a prediction is a straightforward step-by-step calculation:
             </p>
-            <p>
-              This linear dot-product combined value is then processed by a non-linear activation function, yielding the final layer 
-              activation vector a[l] = g(z[l]). Introducing non-linear activations (like Tanh, ReLU, or Sigmoid) is crucial: 
-              without them, any multi-layer network collapses into a single linear equation, unable to solve complex classifications. 
-              The final layer output forms the model's target prediction, denoted as ŷ.
-            </p>
+            <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14.5px', color: 'var(--color-text-gray)' }}>
+              <li><strong>Step 1: Input Data</strong> — Raw values (like image pixels or words) enter the input layer.</li>
+              <li><strong>Step 2: Processing</strong> — Inputs are multiplied by connection strengths (weights), combined with offset bias adjustments, and sent forward.</li>
+              <li><strong>Step 3: The Filter Switch</strong> — An activation function acts as a threshold barrier, deciding whether the signals are strong enough to pass to subsequent layers.</li>
+              <li><strong>Step 4: Final Guess</strong> — The final layer outputs the model's prediction.</li>
+            </ul>
           </div>
         </section>
 
         <section className="info-section">
-          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '8px' }}>Optimization and Gradient Descent</h2>
+          <h2 className="section-title" style={{ fontSize: '28px', color: 'var(--color-text-white)', marginBottom: '15px' }}>How the Network Learns</h2>
           <div className="section-text" style={{ fontSize: '15px', color: 'var(--color-text-gray)', lineHeight: '1.7', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <p>
-              To train the model, we define a loss function (like Mean Squared Error for numeric values, or Binary Cross-Entropy for 
-              probability classification) to quantify how far predictions ŷ deviate from true targets y. Minimizing this loss 
-              requires calculating partial derivatives of the cost function with respect to every single weight and bias in the network 
-              using the calculus chain rule.
+              Learning is an interactive trial-and-error cycle containing three main phases:
             </p>
+            <ol style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14.5px', color: 'var(--color-text-gray)' }}>
+              <li><strong>Calculate Error Score</strong> — The model compares its current guess against the correct answer. A loss score measures how wrong the guess was.</li>
+              <li><strong>Backpropagate Feedback</strong> — The network traces the error backward through its connections to determine which weights were responsible for the mistake.</li>
+              <li><strong>Adjust Weights</strong> — An optimizer tweaks the connection strengths slightly to reduce the error on the next trial.</li>
+            </ol>
             <p>
-              These partial derivatives, or gradients, represent the direction of steepest loss increase. Optimization algorithms (like 
-              SGD, Momentum, or Adam) use these gradients to subtract parameter updates: w ← w - η · ∂L/∂w, 
-              where η is the learning rate. By repeating this forward-loss-backpropagation loop across many training epochs, the 
-              network weights iteratively converge towards their optimal configuration, minimizing total error.
+              By repeating this cycle thousands of times, the network converges, meaning it reaches its optimal state where error rates stop decreasing.
             </p>
           </div>
         </section>
 
         <div className="workflow-card" style={{ padding: '24px', marginTop: '20px' }}>
-          <h2 className="section-title" style={{ fontSize: '20px', color: 'var(--color-text-white)', marginBottom: '4px' }}>Deep Learning Project Checklist</h2>
-          <div className="section-text" style={{ fontSize: '14.5px', color: 'var(--color-text-gray)', lineHeight: '1.7', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <p>
-              When deploying deep learning networks, we must verify that our model architecture fits the data dimensionality. 
-              Always verify that input feature maps are normalized (such as zero-mean and unit variance transformations) before training. 
-              Double-check that split boundaries between training, validation, and test datasets do not contain overlapping sequences to prevent data leakage.
-            </p>
-            <p>
-              During gradient calculations, verify that weights converge smoothly without oscillations. If loss values stagnate, check 
-              for vanishing gradients and apply batch normalization or residual skip-connections to keep gradient signals alive.
-            </p>
+          <h2 className="section-title" style={{ fontSize: '20px', color: 'var(--color-text-white)', marginBottom: '15px' }}>Deep Learning Project Checklist</h2>
+          <p style={{ fontSize: '13.5px', color: 'var(--color-text-gray)', marginBottom: '20px', fontStyle: 'italic' }}>
+            Click the tasks below to check off your validation steps as you build, train, and verify your neural model:
+          </p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {checklist.map((item) => (
+              <div 
+                key={item.id} 
+                onClick={() => toggleCheck(item.id)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'flex-start', 
+                  gap: '12px', 
+                  padding: '12px 16px', 
+                  background: item.checked ? 'rgba(255,255,255,0.02)' : 'var(--bg-primary)', 
+                  border: '1px solid var(--border-color)', 
+                  borderRadius: '6px', 
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <div style={{ 
+                  width: '18px', 
+                  height: '18px', 
+                  borderRadius: '4px', 
+                  border: '2px solid var(--color-text-gray)', 
+                  background: item.checked ? 'var(--color-text-white)' : 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--bg-primary)',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                  marginTop: '1px'
+                }}>
+                  {item.checked ? "✓" : ""}
+                </div>
+                <span style={{ 
+                  fontSize: '13.5px', 
+                  color: item.checked ? 'var(--color-text-gray)' : 'var(--color-text-white)',
+                  textDecoration: item.checked ? 'line-through' : 'none',
+                  lineHeight: '1.5'
+                }}>
+                  {item.text}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
